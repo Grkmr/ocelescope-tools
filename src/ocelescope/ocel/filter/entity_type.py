@@ -6,7 +6,6 @@ from .base import BaseFilter, FilterResult
 
 
 class EventTypeFilter(BaseFilter):
-    type: Literal["event_type"]
     event_types: list[str]
     mode: Literal["exclude", "include"]
 
@@ -19,7 +18,6 @@ class EventTypeFilter(BaseFilter):
 
 
 class ObjectTypeFilter(BaseFilter):
-    type: Literal["object_type"]
     object_types: list[str]
     mode: Literal["exclude", "include"]
 

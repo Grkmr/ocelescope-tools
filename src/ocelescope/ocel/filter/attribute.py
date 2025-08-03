@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Tuple, Union, cast
+from typing import Optional, Tuple, Union, cast
 
 import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype, is_numeric_dtype
@@ -8,7 +8,6 @@ from pm4py.objects.ocel.obj import OCEL
 from pydantic.main import BaseModel
 
 from ..util.attributes import get_objects_with_object_changes
-
 
 from .base import BaseFilter, FilterResult
 
@@ -85,8 +84,6 @@ class EventAttributeFilter(BaseFilter, AttributeFilterConfig):
 
 
 class ObjectAttributeFilter(BaseFilter, AttributeFilterConfig):
-    type: Literal["object_attribute"]
-
     def filter(self, ocel):
         enriched_objects = get_objects_with_object_changes(ocel.ocel)
 

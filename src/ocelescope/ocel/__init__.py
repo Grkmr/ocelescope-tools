@@ -8,6 +8,7 @@ from .filter import (
     ObjectAttributeFilter,
     TimeFrameFilter,
     OCELFilter,
+    ObjectTypeFilter,
 )
 
 __all__ = [
@@ -17,6 +18,7 @@ __all__ = [
     "EventAttributeFilter",
     "EventTypeFilter",
     "O2OCountFilter",
+    "ObjectTypeFilter",
     "ObjectAttributeFilter",
     "TimeFrameFilter",
     "OCELFilter",
