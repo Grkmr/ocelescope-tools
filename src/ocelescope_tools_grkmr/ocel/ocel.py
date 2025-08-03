@@ -18,7 +18,7 @@ from pm4py import OCEL as PM4PYOCEL
 from util.cache import instance_lru_cache
 from util.pandas import mmmm
 
-from ocelescope_tools_grkmr.ocel.extension import OcelExtension
+from .extension import OCELExtension
 
 from .filter import OCELFilter, apply_filters
 from .util.attributes import (
@@ -42,7 +42,7 @@ class OCEL:
         self.state_id = str(uuid4())
 
         # extensions
-        self._extensions: dict[str, OcelExtension] = {}
+        self._extensions: dict[str, OCELExtension] = {}
 
         self._init_cache()
 
@@ -664,7 +664,7 @@ class OCEL:
 
     # ----- EXTENTIONS ------------------------------------------------------------------------------------------
     # region
-    def load_extension(self, extensions: list[type[OcelExtension]]):
+    def load_extension(self, extensions: list[type[OCELExtension]]):
         path = self.meta.get("path")
 
         if not path:
@@ -679,10 +679,10 @@ class OCEL:
             except Exception:
                 print("failed to load extension")
 
-    def get_extension(self, name: str) -> Optional[OcelExtension]:
+    def get_extension(self, name: str) -> Optional[OCELExtension]:
         return self._extensions.get(name)
 
-    def get_extensions_list(self) -> list[OcelExtension]:
+    def get_extensions_list(self) -> list[OCELExtension]:
         """Returns a list of all loaded extensions."""
         return list(self._extensions.values())
 

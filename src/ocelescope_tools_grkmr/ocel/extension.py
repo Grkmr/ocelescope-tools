@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import TypeVar
 
-T = TypeVar("T", bound="OcelExtension")
+T = TypeVar("T", bound="OCELExtension")
 
 
-class OcelExtension(ABC):
+class OCELExtension(ABC):
     """
     Abstract base class for OCEL extensions that can be imported/exported from a file path.
     """
