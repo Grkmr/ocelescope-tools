@@ -1,16 +1,18 @@
-from typing import Optional, cast
+from typing import Optional, cast, TYPE_CHECKING
 
 import pandas as pd
 import pm4py
 
-from ..ocel import OCEL
 
 from .base import BaseFilter, FilterResult
 
 from .filters import OCELFilter
 
+if TYPE_CHECKING:
+    from ..ocel import OCEL
 
-def compute_combined_masks(ocel: OCEL, filters: OCELFilter) -> FilterResult:
+
+def compute_combined_masks(ocel: "OCEL", filters: OCELFilter) -> FilterResult:
     combined = FilterResult(
         events=pd.Series(True, index=ocel.events.index),
         objects=pd.Series(True, index=ocel.objects.index),
@@ -25,7 +27,9 @@ def compute_combined_masks(ocel: OCEL, filters: OCELFilter) -> FilterResult:
     return combined
 
 
-def apply_filters(ocel: OCEL, filters: OCELFilter) -> OCEL:
+def apply_filters(ocel: "OCEL", filters: OCELFilter) -> "OCEL":
+    from ..ocel import OCEL
+
     masks = compute_combined_masks(ocel, filters)
 
     filtered_event_ids: Optional[pd.Series] = (

@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from pandas import Series
 from pydantic import BaseModel
 
-from ..ocel import OCEL
+
+if TYPE_CHECKING:
+    from ..ocel import OCEL
 
 
 @dataclass()
@@ -32,5 +34,5 @@ class FilterResult:
 
 class BaseFilter(ABC, BaseModel):
     @abstractmethod
-    def filter(self, ocel: OCEL) -> FilterResult:
+    def filter(self, ocel: "OCEL") -> FilterResult:
         pass
