@@ -9,6 +9,8 @@ from .ocel import (
     OCELExtension,
     ObjectTypeFilter,
     OCEL,
+    RelationCountSummary,
+    AttributeSummary,
 )
 
 __all__ = [
@@ -22,4 +24,6 @@ __all__ = [
     "ObjectTypeFilter",
     "TimeFrameFilter",
     "OCELFilter",
+    "RelationCountSummary",
+    "AttributeSummary",
 ]

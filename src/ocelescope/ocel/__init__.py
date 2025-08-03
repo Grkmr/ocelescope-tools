@@ -10,6 +10,7 @@ from .filter import (
     OCELFilter,
     ObjectTypeFilter,
 )
+from .util import AttributeSummary, RelationCountSummary
 
 __all__ = [
     "OCEL",
@@ -21,5 +22,7 @@ __all__ = [
     "ObjectTypeFilter",
     "ObjectAttributeFilter",
     "TimeFrameFilter",
+    "AttributeSummary",
+    "RelationCountSummary",
     "OCELFilter",
 ]
