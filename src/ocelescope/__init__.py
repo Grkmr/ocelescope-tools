@@ -7,6 +7,7 @@ from .ocel import (
     TimeFrameFilter,
     OCELFilter,
     OCELExtension,
+    ObjectTypeFilter,
     OCEL,
 )
 
@@ -18,6 +19,7 @@ __all__ = [
     "EventTypeFilter",
     "O2OCountFilter",
     "ObjectAttributeFilter",
+    "ObjectTypeFilter",
     "TimeFrameFilter",
     "OCELFilter",
 ]
