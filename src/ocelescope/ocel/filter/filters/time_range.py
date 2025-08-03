@@ -2,7 +2,7 @@ from typing import Literal, Optional
 
 import pandas as pd
 
-from .base import BaseFilter, FilterResult
+from ..base import BaseFilter, FilterResult
 
 
 class TimeFrameFilter(BaseFilter):

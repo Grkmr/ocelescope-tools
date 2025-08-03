@@ -21,7 +21,7 @@ from ..util.pandas import mmmm
 
 from .extension import OCELExtension
 
-from .filter import OCELFilter, apply_filters
+from .filter import OCELFilter
 from .util.attributes import (
     AttributeSummary,
     summarize_event_attributes,
@@ -144,6 +144,8 @@ class OCEL:
     # region
 
     def apply_filter(self, filters: OCELFilter) -> OCEL:
+        from .filter import apply_filters
+
         filtered_ocel = apply_filters(self, filters=filters)
         filtered_ocel.meta = self.meta
 
@@ -215,38 +217,6 @@ class OCEL:
     def efg(self, otype: str):
         """Alias of eventually_follows_graph"""
         return self.eventually_follows_graph(otype)
-
-    # endregion
-
-    # ----- EVENT-OBJECT GRAPH ------------------------------------------------------------------------------------------
-    # region
-
-    @instance_lru_cache(make_hashable=True)
-    def successions(self, otypes: set[str] | None = None):
-        relations = self.lifecycle_indices(otypes=otypes, include_qualifiers=False)
-        relations["ocel:next_lifecycle_index"] = relations["ocel:lifecycle_index"] + 1
-        relations = relations[
-            [
-                "ocel:oid",
-                "ocel:type",
-                "ocel:eid",
-                "ocel:activity",
-                "ocel:lifecycle_index",
-                "ocel:next_lifecycle_index",
-            ]
-        ]
-        succ = pd.merge(
-            relations,
-            relations,
-            left_on=["ocel:oid", "ocel:type", "ocel:next_lifecycle_index"],
-            right_on=["ocel:oid", "ocel:type", "ocel:lifecycle_index"],
-            suffixes=("_1", "_2"),
-        )
-        succ.drop(
-            columns=["ocel:next_lifecycle_index_1", "ocel:next_lifecycle_index_2"],
-            inplace=True,
-        )
-        return succ
 
     # endregion
 
