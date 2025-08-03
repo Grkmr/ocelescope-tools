@@ -3,7 +3,7 @@ from typing import Optional, TypedDict, cast
 import pandas as pd
 import pm4py
 
-from ocel.ocel import OCEL
+from ..ocel import OCEL
 
 from .attribute import EventAttributeFilter, ObjectAttributeFilter
 from .base import BaseFilter, FilterResult

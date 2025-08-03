@@ -7,7 +7,8 @@ from pandas.core.series import Series
 from pm4py.objects.ocel.obj import OCEL
 from pydantic.main import BaseModel
 
-from ocel.util.attributes import get_objects_with_object_changes
+from ..util.attributes import get_objects_with_object_changes
+
 
 from .base import BaseFilter, FilterResult
 

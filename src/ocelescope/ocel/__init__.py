@@ -1,6 +1,6 @@
-from ocel import OCEL
-from extension import OCELExtension
-from filter import (
+from .ocel import OCEL
+from .extension import OCELExtension
+from .filter import (
     E2OCountFilter,
     EventAttributeFilter,
     EventTypeFilter,

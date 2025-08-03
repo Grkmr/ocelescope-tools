@@ -15,8 +15,9 @@ import pandas as pd
 import pm4py
 from cachetools import LRUCache
 from pm4py import OCEL as PM4PYOCEL
-from util.cache import instance_lru_cache
-from util.pandas import mmmm
+
+from ..util.cache import instance_lru_cache
+from ..util.pandas import mmmm
 
 from .extension import OCELExtension
 
@@ -339,45 +340,6 @@ class OCEL:
             .sort_values(["num_events", "ocel:type"])["ocel:type"]
             .tolist()
         )
-
-    @instance_lru_cache(make_hashable=True)
-    def lifecycle_indices(
-        self, otypes: set[str] | None = None, include_qualifiers: bool = True
-    ) -> pd.DataFrame:
-        """
-        Enriches E2O relations with the object lifecycle index (ocel:lifecycle_index).
-        Duplicated E2O relations are grouped, with qualifiers aggregated to a set.
-        """
-        columns = [
-            "ocel:eid",
-            "ocel:activity",
-            "ocel:timestamp",
-            "ocel:oid",
-            "ocel:type",
-        ]
-        if include_qualifiers:
-            columns.append("ocel:qualifier")
-        relations = self.filter_relations(otypes=otypes, copy=False)
-        relations = relations[columns]
-        if not include_qualifiers:
-            relations = relations.drop_duplicates(subset=["ocel:eid", "ocel:oid"])
-        elif not self.are_qualifiers_unique():
-            # An e2o relation might be present multiple times because of multiple qualifiers.
-            # Group these relations and retain the qualifiers in a set.
-            # (Otherwise, lifecycle indices do not make sense - an event would be following itself.)
-            e2o = relations.groupby(["ocel:eid", "ocel:oid"])
-            relations = e2o[["ocel:activity", "ocel:timestamp", "ocel:type"]].first()
-            relations["ocel:qualifiers"] = e2o["ocel:qualifier"].agg(set)
-            relations = relations.reset_index()
-        else:
-            relations = relations.copy()
-            relations["ocel:qualifiers"] = relations["ocel:qualifier"].apply(lambda q: {q})
-            relations.drop(columns=["ocel:qualifier"], inplace=True)
-        # Compute lifecycle indices
-        relations["ocel:lifecycle_index"] = (
-            relations.sort_values(["ocel:oid", "ocel:timestamp"]).groupby("ocel:oid").cumcount()
-        )
-        return relations
 
     # endregion
 

@@ -5,7 +5,7 @@ from pandas.core.frame import DataFrame
 from pandas.core.series import Series
 from pydantic import BaseModel
 
-from ocel.util.relations import getO2OWithTypes
+from ..util.relations import getO2OWithTypes
 
 from .base import BaseFilter, FilterResult
 

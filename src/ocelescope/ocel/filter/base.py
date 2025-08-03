@@ -5,7 +5,7 @@ from typing import Optional
 from pandas import Series
 from pydantic import BaseModel
 
-from ocel.ocel import OCEL
+from ..ocel import OCEL
 
 
 @dataclass()
