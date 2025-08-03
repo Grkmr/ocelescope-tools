@@ -9,5 +9,5 @@ General tools and building blocks for working with [Object-Centric Event Logs (O
 Install directly from Git:
 
 ```bash
-pip install git+https://github.com/yourusername/ocelescope-tools-grkmr.git
+pip install git+https://github.com/grkmr/ocelescope-tools.git
 
