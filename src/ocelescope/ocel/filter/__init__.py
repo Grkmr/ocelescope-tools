@@ -15,7 +15,7 @@ from .relation_count import E2OCountFilter, O2OCountFilter
 from .time_range import TimeFrameFilter
 
 
-class OCELFilter(TypedDict):
+class OCELFilter(TypedDict, total=False):
     object_types: ObjectTypeFilter
     event_type: EventTypeFilter
     time_range: TimeFrameFilter
