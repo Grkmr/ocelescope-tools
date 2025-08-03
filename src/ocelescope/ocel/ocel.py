@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 import platform
 import warnings
 from copy import deepcopy
@@ -12,9 +11,9 @@ from uuid import uuid4
 import networkx as nx
 import numpy as np
 import pandas as pd
-import pm4py
 from cachetools import LRUCache
-from pm4py import OCEL as PM4PYOCEL
+import pm4py
+from pm4py.objects.ocel.obj import OCEL as PM4PYOCEL
 
 from ..util.cache import instance_lru_cache
 from ..util.pandas import mmmm
