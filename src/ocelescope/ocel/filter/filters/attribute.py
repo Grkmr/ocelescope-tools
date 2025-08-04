@@ -74,11 +74,11 @@ def filter_by_attribute(attribute_df: DataFrame, type_column: str, config: Attri
 
 
 class EventAttributeFilter(BaseFilter, AttributeFilterConfig):
-    def filter_by_event_attribute(self, ocel: OCEL):
+    def filter(self, ocel):
         return FilterResult(
             events=filter_by_attribute(
                 ocel.events,
-                ocel.event_activity,
+                ocel.ocel.event_activity,
                 config=AttributeFilterConfig(**self.model_dump()),
             )
         )
@@ -98,5 +98,5 @@ class ObjectAttributeFilter(BaseFilter, AttributeFilterConfig):
         valid_ids = filtered_rows[ocel.ocel.object_id_column].unique()  # type:ignore
 
         return FilterResult(
-            objects=ocel.ocel.objects[ocel.object_id_column].isin(valid_ids)  # type:ignore
+            objects=ocel.ocel.objects[ocel.ocel.object_id_column].isin(valid_ids)  # type:ignore
         )

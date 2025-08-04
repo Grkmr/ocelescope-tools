@@ -125,7 +125,7 @@ class O2OCountFilter(BaseFilter, RelationCountFilterConfig):
     direction: Literal["source", "target"] = "source"
 
     def filter(self, ocel):
-        o2oTable = getO2OWithTypes(ocel, direction=self.direction)
+        o2oTable = getO2OWithTypes(ocel.ocel, direction=self.direction)
 
         mask = filter_by_relation_counts(
             relation_table=o2oTable,
