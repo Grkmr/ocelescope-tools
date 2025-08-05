@@ -7,7 +7,7 @@ from ..base import BaseFilter, FilterResult
 
 class TimeFrameFilter(BaseFilter):
     time_range: tuple[Optional[str], Optional[str]]
-    mode: Literal["exclude", "include"]
+    mode: Literal["exclude", "include"] = "include"
 
     def filter(self, ocel):
         start_time, end_time = self.time_range

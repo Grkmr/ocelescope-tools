@@ -7,7 +7,7 @@ from ..base import BaseFilter, FilterResult
 
 class EventTypeFilter(BaseFilter):
     event_types: list[str]
-    mode: Literal["exclude", "include"]
+    mode: Literal["exclude", "include"] = "include"
 
     def filter(self, ocel):
         mask = cast(pd.Series, ocel.events["ocel:activity"].isin(self.event_types))
@@ -19,7 +19,7 @@ class EventTypeFilter(BaseFilter):
 
 class ObjectTypeFilter(BaseFilter):
     object_types: list[str]
-    mode: Literal["exclude", "include"]
+    mode: Literal["exclude", "include"] = "include"
 
     def filter(self, ocel):
         mask = cast(pd.Series, ocel.objects["ocel:type"].isin(self.object_types))
