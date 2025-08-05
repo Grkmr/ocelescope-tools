@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from pydantic import BaseModel
 
-from ocelescope.visualization import Visualization
+from ocelescope import Visualization
 
 
 class Resource(BaseModel, ABC):

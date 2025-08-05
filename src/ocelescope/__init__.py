@@ -13,7 +13,9 @@ from ocelescope.ocel import (
     AttributeSummary,
 )
 
-from .visualization import Visualization, Graph
+
+from ocelescope.visualization import Visualization
+from ocelescope.resource import PetriNet, Resource, DirectlyFollowsGraph
 
 __all__ = [
     "OCEL",
@@ -28,6 +30,8 @@ __all__ = [
     "OCELFilter",
     "RelationCountSummary",
     "AttributeSummary",
-    "Graph",
     "Visualization",
+    "PetriNet",
+    "DirectlyFollowsGraph",
+    "Resource",
 ]
