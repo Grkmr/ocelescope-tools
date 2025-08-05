@@ -13,6 +13,8 @@ from .ocel import (
     AttributeSummary,
 )
 
+from .visualization import Visualization, Graph
+
 __all__ = [
     "OCEL",
     "OCELExtension",
@@ -26,4 +28,6 @@ __all__ = [
     "OCELFilter",
     "RelationCountSummary",
     "AttributeSummary",
+    "Graph",
+    "Visualization",
 ]
