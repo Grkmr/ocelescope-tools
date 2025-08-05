@@ -4,11 +4,9 @@ import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype, is_numeric_dtype
 from pandas.core.frame import DataFrame
 from pandas.core.series import Series
-from pm4py.objects.ocel.obj import OCEL
 from pydantic.main import BaseModel
 
-from ....ocel.util.attributes import get_objects_with_object_changes
-
+from ocelescope.ocel.util.attributes import get_objects_with_object_changes
 
 from ..base import BaseFilter, FilterResult
 

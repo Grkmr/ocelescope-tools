@@ -1,4 +1,4 @@
-from .apply import apply_filters
+from ocelescope.ocel.filter.apply import apply_filters
 
 from .filters import (
     E2OCountFilter,

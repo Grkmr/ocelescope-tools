@@ -1,6 +1,7 @@
-from .ocel import OCEL
-from .extension import OCELExtension
-from .filter import (
+from ocelescope.ocel.ocel import OCEL
+
+from ocelescope.ocel.extension import OCELExtension
+from ocelescope.ocel.filter import (
     E2OCountFilter,
     EventAttributeFilter,
     EventTypeFilter,
@@ -10,7 +11,7 @@ from .filter import (
     OCELFilter,
     ObjectTypeFilter,
 )
-from .util import AttributeSummary, RelationCountSummary
+from ocelescope.ocel.util import AttributeSummary, RelationCountSummary
 
 __all__ = [
     "OCEL",

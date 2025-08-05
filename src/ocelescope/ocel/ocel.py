@@ -15,18 +15,19 @@ from cachetools import LRUCache
 import pm4py
 from pm4py.objects.ocel.obj import OCEL as PM4PYOCEL
 
-from ..util.cache import instance_lru_cache
-from ..util.pandas import mmmm
+from ocelescope.util.cache import instance_lru_cache
+from ocelescope.util.pandas import mmmm
 
-from .extension import OCELExtension
+from ocelescope.ocel.extension import OCELExtension
 
-from .filter import OCELFilter
-from .util.attributes import (
+from ocelescope.ocel.filter import OCELFilter
+
+from ocelescope.ocel.util.attributes import (
     AttributeSummary,
     summarize_event_attributes,
     summarize_object_attributes,
 )
-from .util.relations import summarize_e2o_counts, summarize_o2o_counts
+from ocelescope.ocel.util.relations import summarize_e2o_counts, summarize_o2o_counts
 
 
 class OCEL:

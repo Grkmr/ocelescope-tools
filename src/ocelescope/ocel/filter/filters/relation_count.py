@@ -5,9 +5,9 @@ from pandas.core.frame import DataFrame
 from pandas.core.series import Series
 from pydantic import BaseModel
 
-from ....ocel.util.relations import getO2OWithTypes
+from ocelescope.ocel.util.relations import getO2OWithTypes
 
-from ..base import BaseFilter, FilterResult
+from ocelescope.ocel.filter.base import BaseFilter, FilterResult
 
 
 class RelationCountFilterConfig(BaseModel):

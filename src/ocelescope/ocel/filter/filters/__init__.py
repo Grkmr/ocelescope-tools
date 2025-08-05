@@ -1,13 +1,13 @@
 from typing import TypedDict
 
 
-from .attribute import EventAttributeFilter, ObjectAttributeFilter
-from .entity_type import (
+from ocelescope.ocel.filter.filters.attribute import EventAttributeFilter, ObjectAttributeFilter
+from ocelescope.ocel.filter.filters.entity_type import (
     EventTypeFilter,
     ObjectTypeFilter,
 )
-from .relation_count import E2OCountFilter, O2OCountFilter
-from .time_range import TimeFrameFilter
+from ocelescope.ocel.filter.filters.relation_count import E2OCountFilter, O2OCountFilter
+from ocelescope.ocel.filter.filters.time_range import TimeFrameFilter
 
 
 class OCELFilter(TypedDict, total=False):

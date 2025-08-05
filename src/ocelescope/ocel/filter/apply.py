@@ -4,12 +4,12 @@ import pandas as pd
 import pm4py
 
 
-from .base import BaseFilter, FilterResult
+from ocelescope.ocel.filter.base import BaseFilter, FilterResult
 
-from .filters import OCELFilter
+from ocelescope.ocel.filter.filters import OCELFilter
 
 if TYPE_CHECKING:
-    from ..ocel import OCEL
+    from ocelescope.ocel.ocel import OCEL
 
 
 def compute_combined_masks(ocel: "OCEL", filters: OCELFilter) -> FilterResult:

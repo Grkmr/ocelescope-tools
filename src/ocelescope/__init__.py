@@ -1,4 +1,4 @@
-from .ocel import (
+from ocelescope.ocel import (
     E2OCountFilter,
     EventAttributeFilter,
     EventTypeFilter,

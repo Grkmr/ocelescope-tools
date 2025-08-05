@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 
 if TYPE_CHECKING:
-    from ..ocel import OCEL
+    from ocelescope import OCEL
 
 
 @dataclass()
