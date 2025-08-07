@@ -29,7 +29,7 @@ class PetriNet(Resource):
     places: list[Place]
     transitions: list[Transition]
     arcs: list[Arc]
-    type: str = "ocpn"
+    type: Literal["ocpn"] = "ocpn"
 
     def vizualize(self) -> Graph:
         # Use your color generator function

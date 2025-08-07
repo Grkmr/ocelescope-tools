@@ -16,6 +16,7 @@ from ocelescope.ocel import (
 
 from ocelescope.visualization import Visualization
 from ocelescope.resource import PetriNet, Resource, DirectlyFollowsGraph
+from ocelescope.plugin import ResourceAnnotation, OCELAnnotation, Plugin, PluginMeta, PluginMethod
 
 __all__ = [
     "OCEL",
@@ -34,4 +35,9 @@ __all__ = [
     "PetriNet",
     "DirectlyFollowsGraph",
     "Resource",
+    "ResourceAnnotation",
+    "OCELAnnotation",
+    "Plugin",
+    "PluginMeta",
+    "PluginMethod",
 ]

@@ -1,3 +1,4 @@
+from typing import Literal
 from pydantic import BaseModel
 
 
@@ -19,7 +20,7 @@ class ObjectActivityEdge(BaseModel):
 
 
 class DirectlyFollowsGraph(Resource):
-    type: str = "ocdfg"
+    type: Literal["ocdfg"] = "ocdfg"
     object_types: list[str]
     activities: list[str]
     edges: list[Edge]
