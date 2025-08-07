@@ -68,7 +68,7 @@ class PluginMethod(BaseModel):
     input_schema: Optional[type[PluginMethodInput]] = None
     input_ocels: dict[str, OCELAnnotation]
     input_resources: dict[str, tuple[str, ResourceAnnotation]]
-    method: Callable
+    _method: Callable
 
 
 def plugin_method(
@@ -137,7 +137,7 @@ def plugin_method(
                 input_schema=input_schema,
                 input_ocels=input_ocels,
                 input_resources=input_resources,
-                method=func,
+                _method=func,
             ),
         )
 
