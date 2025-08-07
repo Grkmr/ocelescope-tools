@@ -29,7 +29,7 @@ def plugin_meta(
     description: Optional[str] = None,
 ):
     def decorator(cls):
-        cls.meta = PluginMeta(
+        cls.__meta__ = PluginMeta(
             name=name or cls.__name__,
             version=version,
             label=label or cls.__name__,
