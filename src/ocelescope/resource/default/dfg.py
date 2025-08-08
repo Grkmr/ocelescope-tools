@@ -96,16 +96,14 @@ class DirectlyFollowsGraph(Resource):
 
         edges: list[GraphEdge] = activity_edges + start_edges + end_edges
 
-        return (
-            Graph(type="graph", nodes=nodes, edges=edges).layout_graph(
-                {
-                    "engine": "dot",
-                    "dot_attr": {
-                        "rankdir": "BT",
-                        "splines": "True",
-                        "nodesep": "0.8",
-                        "ranksep": "0.5",
-                    },
-                }
-            ),
+        return Graph(type="graph", nodes=nodes, edges=edges).layout_graph(
+            {
+                "engine": "dot",
+                "dot_attr": {
+                    "rankdir": "BT",
+                    "splines": "True",
+                    "nodesep": "0.8",
+                    "ranksep": "0.5",
+                },
+            }
         )
