@@ -87,6 +87,7 @@ class PluginMethod(BaseModel):
     input_schema: Optional[type[PluginMethodInput]] = None
     input_ocels: dict[str, OCELAnnotation]
     input_resources: dict[str, tuple[str, ResourceAnnotation]]
+    resource_types: set[type[Resource]]
     results: list[PluginResult]
     _method: Callable
 
@@ -108,6 +109,7 @@ def plugin_method(
     def decorator(func):
         method_hints = get_type_hints(func, include_extras=True)
 
+        resource_types: set[type[Resource]] = set()
         input_schema: Optional[type[PluginMethodInput]] = None
         input_ocels: dict[str, OCELAnnotation] = {}
         input_resources: dict[str, tuple[str, ResourceAnnotation]] = {}
@@ -127,6 +129,7 @@ def plugin_method(
                     else OCELAnnotation(label=arg_name)
                 )
             elif issubclass(base_type, Resource):
+                resource_types.add(base_type)
                 field_info = base_type.model_fields.get("type")
 
                 if field_info is None or field_info.default is None:
@@ -183,6 +186,7 @@ def plugin_method(
                         )
                     )
                 elif issubclass(base_type, Resource):
+                    resource_types.add(base_type)
                     resource_type = base_type.model_fields.get("type")
                     if resource_type is None or resource_type.default is None:
                         raise ValueError(
@@ -211,6 +215,7 @@ def plugin_method(
                 input_schema=input_schema,
                 input_ocels=input_ocels,
                 input_resources=input_resources,
+                resource_types=resource_types,
                 results=results,
                 _method=func,
             ),
