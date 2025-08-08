@@ -10,7 +10,7 @@ from typing import (
     get_type_hints,
 )
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 from ocelescope.ocel.ocel import OCEL
 from ocelescope.plugin.input import PluginInput
@@ -80,12 +80,13 @@ class PluginMethod(BaseModel):
     name: str
     label: Optional[str] = None
     description: Optional[str] = None
-    input_schema: Optional[type[PluginInput]] = None
-    input_ocels: dict[str, OCELAnnotation]
-    input_resources: dict[str, tuple[str, ResourceAnnotation]]
-    resource_types: set[type[Resource]]
-    results: list[PluginResult]
-    _method: Callable
+    input_ocels: dict[str, OCELAnnotation] = Field(default_factory=dict)
+    input_resources: dict[str, tuple[str, ResourceAnnotation]] = Field(default_factory=dict)
+    results: list[PluginResult] = Field(default_factory=list)
+
+    _input_schema: Optional[type[PluginInput]] = PrivateAttr()
+    _method: Callable = PrivateAttr()
+    _resource_types: set[type[Resource]] = PrivateAttr(default_factory=set)
 
 
 def extract_info(typ) -> tuple[type, Optional[Annotation]]:
@@ -103,12 +104,8 @@ def plugin_method(
     description: Optional[str] = None,
 ):
     def decorator(func):
+        plugin_method_meta = PluginMethod(name=func.__name__, label=label, description=description)
         method_hints = get_type_hints(func, include_extras=True)
-
-        resource_types: set[type[Resource]] = set()
-        input_schema: Optional[type[PluginInput]] = None
-        input_ocels: dict[str, OCELAnnotation] = {}
-        input_resources: dict[str, tuple[str, ResourceAnnotation]] = {}
 
         for arg_name, hint in method_hints.items():
             base_type, annotation = extract_info(hint)
@@ -117,15 +114,15 @@ def plugin_method(
                 continue
 
             if issubclass(base_type, PluginInput):
-                input_schema = base_type
+                plugin_method_meta._input_schema = base_type
             elif issubclass(base_type, OCEL):
-                input_ocels[arg_name] = (
+                plugin_method_meta.input_ocels[arg_name] = (
                     OCELAnnotation(**annotation.model_dump())
                     if annotation is not None
                     else OCELAnnotation(label=arg_name)
                 )
             elif issubclass(base_type, Resource):
-                resource_types.add(base_type)
+                plugin_method_meta._resource_types.add(base_type)
                 field_info = base_type.model_fields.get("type")
 
                 if field_info is None or field_info.default is None:
@@ -135,7 +132,7 @@ def plugin_method(
 
                 type_value: str = field_info.default
 
-                input_resources[arg_name] = (
+                plugin_method_meta.input_resources[arg_name] = (
                     type_value,
                     ResourceAnnotation(**annotation.model_dump())
                     if annotation is not None
@@ -145,8 +142,6 @@ def plugin_method(
                 raise TypeError(
                     f"Argument {arg_name} must be either an OCEL, Resource or Input Schema"
                 )
-
-        results: list[PluginResult] = []
 
         return_type = method_hints.get("return", None)
 
@@ -172,7 +167,7 @@ def plugin_method(
 
                 # Now determine what kind of result it is
                 if issubclass(base_type, OCEL):
-                    results.append(
+                    plugin_method_meta.results.append(
                         OCELResult(
                             type="ocel",
                             is_list=is_list,
@@ -182,13 +177,13 @@ def plugin_method(
                         )
                     )
                 elif issubclass(base_type, Resource):
-                    resource_types.add(base_type)
+                    plugin_method_meta._resource_types.add(base_type)
                     resource_type = base_type.model_fields.get("type")
                     if resource_type is None or resource_type.default is None:
                         raise ValueError(
                             f"Resource {base_type.__name__} must define a default `type` field."
                         )
-                    results.append(
+                    plugin_method_meta.results.append(
                         ResourceResult(
                             type="resource",
                             is_list=is_list,
@@ -204,17 +199,7 @@ def plugin_method(
         setattr(
             func,
             "__meta__",
-            PluginMethod(
-                name=func.__name__,
-                label=label or func.__name__,
-                description=description,
-                input_schema=input_schema,
-                input_ocels=input_ocels,
-                input_resources=input_resources,
-                resource_types=resource_types,
-                results=results,
-                _method=func,
-            ),
+            plugin_method_meta,
         )
 
         return func
