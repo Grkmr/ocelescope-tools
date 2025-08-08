@@ -124,7 +124,7 @@ def plugin_method(
                 input_ocels[arg_name] = (
                     OCELAnnotation(**annotation.model_dump())
                     if annotation is not None
-                    else OCELAnnotation(label="arg_name")
+                    else OCELAnnotation(label=arg_name)
                 )
             elif issubclass(base_type, Resource):
                 field_info = base_type.model_fields.get("type")
