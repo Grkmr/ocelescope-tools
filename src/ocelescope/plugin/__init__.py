@@ -4,6 +4,7 @@ from ocelescope.plugin.decorators import (
     plugin_meta,
     OCELAnnotation,
     ResourceAnnotation,
+    PluginResult,
 )
 
 
@@ -15,4 +16,5 @@ __all__ = [
     "plugin_meta",
     "OCELAnnotation",
     "ResourceAnnotation",
+    "PluginResult",
 ]
