@@ -6,6 +6,7 @@ from ocelescope.plugin.decorators import (
     ResourceAnnotation,
     PluginResult,
 )
+from ocelescope.plugin.input import PluginInput, OCEL_FIELD
 
 
 __all__ = [
@@ -17,4 +18,6 @@ __all__ = [
     "OCELAnnotation",
     "ResourceAnnotation",
     "PluginResult",
+    "PluginInput",
+    "OCEL_FIELD",
 ]

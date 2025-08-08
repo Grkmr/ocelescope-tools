@@ -1,4 +1,3 @@
-from abc import ABC
 from typing import (
     Annotated,
     Callable,
@@ -14,6 +13,7 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ocelescope.ocel.ocel import OCEL
+from ocelescope.plugin.input import PluginInput
 from ocelescope.resource.resource import Resource
 
 
@@ -60,10 +60,6 @@ class ResourceAnnotation(Annotation):
     pass
 
 
-class PluginMethodInput(ABC, BaseModel):
-    pass
-
-
 class OCELResult(BaseModel):
     type: Literal["ocel"] = "ocel"
     is_list: bool
@@ -84,7 +80,7 @@ class PluginMethod(BaseModel):
     name: str
     label: Optional[str] = None
     description: Optional[str] = None
-    input_schema: Optional[type[PluginMethodInput]] = None
+    input_schema: Optional[type[PluginInput]] = None
     input_ocels: dict[str, OCELAnnotation]
     input_resources: dict[str, tuple[str, ResourceAnnotation]]
     resource_types: set[type[Resource]]
@@ -110,7 +106,7 @@ def plugin_method(
         method_hints = get_type_hints(func, include_extras=True)
 
         resource_types: set[type[Resource]] = set()
-        input_schema: Optional[type[PluginMethodInput]] = None
+        input_schema: Optional[type[PluginInput]] = None
         input_ocels: dict[str, OCELAnnotation] = {}
         input_resources: dict[str, tuple[str, ResourceAnnotation]] = {}
 
@@ -120,7 +116,7 @@ def plugin_method(
             if not isinstance(base_type, type) or arg_name == "return":
                 continue
 
-            if issubclass(base_type, PluginMethodInput):
+            if issubclass(base_type, PluginInput):
                 input_schema = base_type
             elif issubclass(base_type, OCEL):
                 input_ocels[arg_name] = (

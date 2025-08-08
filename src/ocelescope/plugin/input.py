@@ -1,5 +1,10 @@
+from abc import ABC
 from typing import Any, Optional, Literal
-from pydantic import Field
+from pydantic import BaseModel, Field
+
+
+class PluginInput(ABC, BaseModel, frozen=True):
+    pass
 
 
 def OCEL_FIELD(
