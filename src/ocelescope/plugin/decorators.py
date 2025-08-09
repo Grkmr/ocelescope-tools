@@ -1,5 +1,7 @@
+from functools import cached_property
 from typing import (
     Annotated,
+    Any,
     Callable,
     Literal,
     Optional,
@@ -10,7 +12,7 @@ from typing import (
     get_type_hints,
 )
 
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import BaseModel, Field, PrivateAttr, computed_field
 
 from ocelescope.ocel.ocel import OCEL
 from ocelescope.plugin.input import PluginInput
@@ -82,11 +84,17 @@ class PluginMethod(BaseModel):
     description: Optional[str] = None
     input_ocels: dict[str, OCELAnnotation] = Field(default_factory=dict)
     input_resources: dict[str, tuple[str, ResourceAnnotation]] = Field(default_factory=dict)
+
     results: list[PluginResult] = Field(default_factory=list)
 
-    _input_schema: Optional[type[PluginInput]] = PrivateAttr()
+    _input_model: Optional[type[PluginInput]] = PrivateAttr(default=None)
     _method: Callable = PrivateAttr()
     _resource_types: set[type[Resource]] = PrivateAttr(default_factory=set)
+
+    @computed_field
+    @cached_property
+    def input_schema(self) -> dict[str, Any]:
+        return self._input_model.model_json_schema() if self._input_model is not None else {}
 
 
 def extract_info(typ) -> tuple[type, Optional[Annotation]]:
@@ -114,7 +122,7 @@ def plugin_method(
                 continue
 
             if issubclass(base_type, PluginInput):
-                plugin_method_meta._input_schema = base_type
+                plugin_method_meta._input_model = base_type
             elif issubclass(base_type, OCEL):
                 plugin_method_meta.input_ocels[arg_name] = (
                     OCELAnnotation(**annotation.model_dump())
