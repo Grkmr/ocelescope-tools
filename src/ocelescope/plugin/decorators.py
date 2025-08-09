@@ -204,6 +204,8 @@ def plugin_method(
                 else:
                     raise TypeError(f"Unsupported return type: {base_type}")
 
+        plugin_method_meta._method = func
+
         setattr(
             func,
             "__meta__",
