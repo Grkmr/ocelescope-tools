@@ -31,7 +31,7 @@ class PetriNet(Resource):
     arcs: list[Arc]
     type: Literal["ocpn"] = "ocpn"
 
-    def vizualize(self) -> Graph:
+    def visualize(self):
         # Use your color generator function
         object_types = list({p.object_type for p in self.places})
         color_map = generate_color_map(object_types)

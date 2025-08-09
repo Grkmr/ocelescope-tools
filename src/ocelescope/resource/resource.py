@@ -6,5 +6,5 @@ from ocelescope import Visualization
 
 class Resource(BaseModel, ABC):
     @abstractmethod
-    def vizualize(self) -> Visualization:
+    def visualize(self) -> Visualization:
         pass
