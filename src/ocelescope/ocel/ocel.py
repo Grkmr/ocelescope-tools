@@ -558,7 +558,7 @@ class OCEL:
                 case ".xmlocel":
                     pm4py_ocel = pm4py.read.read_ocel2_xml(str(path))
                 case ".jsonocel":
-                    pm4py_ocel = pm4py.read.read_ocel2_xml(str(path))
+                    pm4py_ocel = pm4py.read.read_ocel2_json(str(path))
                 case _:
                     raise ValueError(f"Unsupported extension: {path.suffix}")
 
