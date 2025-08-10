@@ -78,6 +78,10 @@ class ResourceResult(BaseModel):
 PluginResult: TypeAlias = Annotated[Union[OCELResult, ResourceResult], Field(discriminator="type")]
 
 
+PluginReturnItemType = Union[OCEL, Resource, list[OCEL], list[Resource]]
+PluginReturnType = Union[tuple[PluginReturnItemType], PluginReturnItemType]
+
+
 class PluginMethod(BaseModel):
     name: str
     label: Optional[str] = None
@@ -88,7 +92,7 @@ class PluginMethod(BaseModel):
     results: list[PluginResult] = Field(default_factory=list)
 
     _input_model: Optional[type[PluginInput]] = PrivateAttr(default=None)
-    _method: Callable = PrivateAttr()
+    _method: Callable[..., PluginReturnType] = PrivateAttr()
     _resource_types: set[type[Resource]] = PrivateAttr(default_factory=set)
 
     @computed_field
@@ -111,7 +115,7 @@ def plugin_method(
     label: Optional[str] = None,
     description: Optional[str] = None,
 ):
-    def decorator(func):
+    def decorator(func: Callable[..., PluginReturnType]):
         plugin_method_meta = PluginMethod(name=func.__name__, label=label, description=description)
         method_hints = get_type_hints(func, include_extras=True)
 
