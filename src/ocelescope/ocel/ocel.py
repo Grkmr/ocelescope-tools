@@ -148,6 +148,7 @@ class OCEL:
 
         filtered_ocel = apply_filters(self, filters=filters)
         filtered_ocel.meta = self.meta
+        filtered_ocel._extensions = self._extensions
 
         return filtered_ocel
 
