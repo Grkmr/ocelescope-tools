@@ -12,11 +12,21 @@ from ocelescope.ocel import (
     RelationCountSummary,
     AttributeSummary,
 )
-
-
 from ocelescope.visualization import Visualization
 from ocelescope.resource import PetriNet, Resource, DirectlyFollowsGraph
-from ocelescope.plugin import ResourceAnnotation, OCELAnnotation, Plugin, PluginMeta, PluginMethod
+from ocelescope.plugin import (
+    ResourceAnnotation,
+    OCELAnnotation,
+    Plugin,
+    PluginMeta,
+    PluginMethod,
+    COMPUTED_SELECTION,
+    OCEL_FIELD,
+    PluginInput,
+    PluginResult,
+    plugin_method,
+    plugin_meta,
+)
 
 __all__ = [
     "OCEL",
@@ -40,4 +50,10 @@ __all__ = [
     "Plugin",
     "PluginMeta",
     "PluginMethod",
+    "COMPUTED_SELECTION",
+    "OCEL_FIELD",
+    "PluginInput",
+    "PluginResult",
+    "plugin_method",
+    "plugin_meta",
 ]

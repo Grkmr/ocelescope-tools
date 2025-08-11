@@ -6,7 +6,7 @@ from ocelescope.plugin.decorators import (
     ResourceAnnotation,
     PluginResult,
 )
-from ocelescope.plugin.input import PluginInput, OCEL_FIELD
+from ocelescope.plugin.input import PluginInput, OCEL_FIELD, COMPUTED_SELECTION
 
 
 __all__ = [
@@ -20,4 +20,5 @@ __all__ = [
     "PluginResult",
     "PluginInput",
     "OCEL_FIELD",
+    "COMPUTED_SELECTION",
 ]

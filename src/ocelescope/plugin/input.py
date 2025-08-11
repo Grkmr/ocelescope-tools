@@ -27,3 +27,25 @@ def OCEL_FIELD(
         description=description,
         json_schema_extra={"x-ui-meta": extra},
     )
+
+
+def COMPUTED_SELECTION(
+    *,
+    title: Optional[str] = None,
+    description: Optional[str] = None,
+    provider: str,
+    depends_on: list[str] | None = None,
+    default: Any = ...,
+):
+    meta = {
+        "type": "computed_select",
+        "provider": provider,
+        "dependsOn": depends_on or [],
+    }
+
+    return Field(
+        default=default,
+        title=title,
+        description=description,
+        json_schema_extra={"x-ui-meta": meta},
+    )
