@@ -13,6 +13,6 @@ class TableColumn(BaseModel):
 
 
 class Table(BaseModel):
-    type: Literal["table"] = "table"
+    type: Literal["table"]
     columns: List[TableColumn]
     rows: List[dict[str, Any]]
