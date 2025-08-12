@@ -1,10 +1,28 @@
-from typing import Annotated, TypeAlias
+from typing import Annotated, TypeAlias, Union
 
 from pydantic import Field
 
-from ocelescope.visualization.default.graph import Graph
+from ocelescope.visualization.default.graph import (
+    Graph,
+    GraphEdge,
+    EdgeArrow,
+    GraphvizLayoutConfig,
+    GraphShapes,
+)
+
+from ocelescope.visualization.default.table import TableColumn, Table
 from ocelescope.visualization.util.color import generate_color_map
 
-Visualization: TypeAlias = Annotated[Graph, Field(discriminator="type")]
+Visualization: TypeAlias = Annotated[Union[Graph, Table], Field(discriminator="type")]
 
-__all__ = ["Visualization", "Graph", "generate_color_map"]
+__all__ = [
+    "Visualization",
+    "Graph",
+    "generate_color_map",
+    "GraphEdge",
+    "EdgeArrow",
+    "GraphvizLayoutConfig",
+    "GraphShapes",
+    "Table",
+    "TableColumn",
+]
