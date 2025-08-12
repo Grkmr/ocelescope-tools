@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import TypeVar
 
+from ocelescope.ocel.ocel import OCELFileExtensions
+
 T = TypeVar("T", bound="OCELExtension")
 
 
@@ -13,10 +15,7 @@ class OCELExtension(ABC):
     name: str
     description: str
     version: str
-    supported_extensions: list[str]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__()
+    supported_extensions: list[OCELFileExtensions]
 
     @staticmethod
     @abstractmethod

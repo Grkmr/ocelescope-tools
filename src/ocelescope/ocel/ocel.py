@@ -5,7 +5,7 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from threading import Lock
-from typing import Any, Iterable, Literal, Optional
+from typing import Any, Iterable, Literal, Optional, TypeVar, cast
 from uuid import uuid4
 
 import networkx as nx
@@ -29,6 +29,11 @@ from ocelescope.ocel.util.attributes import (
 )
 from ocelescope.ocel.util.relations import summarize_e2o_counts, summarize_o2o_counts
 
+OCELFileExtensions = Literal[".xmlocel", ".jsonocel", ".sqlite"]
+
+
+T = TypeVar("T", bound="OCELExtension")
+
 
 class OCEL:
     def __init__(self, ocel: PM4PYOCEL, id: Optional[str] = None):
@@ -43,7 +48,7 @@ class OCEL:
         self.state_id = str(uuid4())
 
         # extensions
-        self._extensions: dict[str, OCELExtension] = {}
+        self._extensions: dict[type[OCELExtension], OCELExtension] = {}
 
         self._init_cache()
 
@@ -580,15 +585,22 @@ class OCEL:
     def write_ocel(
         self,
         file_path: Path,
-        ext: Optional[Literal[".json", ".xml", ".sqlite"]],
+        ext: OCELFileExtensions,
     ):
         match ext:
-            case ".xml":
+            case ".xmlocel":
                 pm4py.write_ocel2_xml(self.ocel, str(file_path))
-            case ".json":
+            case ".jsonocel":
                 pm4py.write_ocel2_json(self.ocel, str(file_path))
             case _:
                 pm4py.write_ocel2_sqlite(self.ocel, str(file_path))
+
+        for extension in self.get_extensions_list():
+            if ext in extension.supported_extensions:
+                try:
+                    extension.export_extension(file_path)
+                except Exception:
+                    print("failed to write extension")
 
     # endregion
     #
@@ -608,12 +620,12 @@ class OCEL:
         for ext_cls in extensions:
             try:
                 if path.suffix in ext_cls.supported_extensions and ext_cls.has_extension(path):
-                    self._extensions[ext_cls.name] = ext_cls.import_extension(path)
+                    self._extensions[ext_cls] = ext_cls.import_extension(path)
             except Exception:
                 print("failed to load extension")
 
-    def get_extension(self, name: str) -> Optional[OCELExtension]:
-        return self._extensions.get(name)
+    def get_extension(self, extension: type[T]) -> Optional[T]:
+        return cast(Optional[T], self._extensions.get(extension))
 
     def get_extensions_list(self) -> list[OCELExtension]:
         """Returns a list of all loaded extensions."""
