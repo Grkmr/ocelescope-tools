@@ -13,6 +13,8 @@ from ocelescope.ocel.filter import (
 )
 from ocelescope.ocel.util import AttributeSummary, RelationCountSummary
 
+from ocelescope.ocel.constants import OCELFileExtensions
+
 __all__ = [
     "OCEL",
     "OCELExtension",
@@ -26,4 +28,5 @@ __all__ = [
     "AttributeSummary",
     "RelationCountSummary",
     "OCELFilter",
+    "OCELFileExtensions",
 ]

@@ -15,6 +15,7 @@ from cachetools import LRUCache
 import pm4py
 from pm4py.objects.ocel.obj import OCEL as PM4PYOCEL
 
+from ocelescope.ocel.constants import OCELFileExtensions
 from ocelescope.util.cache import instance_lru_cache
 from ocelescope.util.pandas import mmmm
 
@@ -28,8 +29,6 @@ from ocelescope.ocel.util.attributes import (
     summarize_object_attributes,
 )
 from ocelescope.ocel.util.relations import summarize_e2o_counts, summarize_o2o_counts
-
-OCELFileExtensions = Literal[".xmlocel", ".jsonocel", ".sqlite"]
 
 
 T = TypeVar("T", bound="OCELExtension")
